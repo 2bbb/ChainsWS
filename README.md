@@ -2,34 +2,39 @@
 
 ## Setup environment
 
-### openFrameworks
-
 - Install Xcode 8/9
 - Download openframeworks `of_v0.9.8_osx_release.zip`
   - http://openframeworks.cc/versions/v0.9.8/of_v0.9.8_osx_release.zip
 - Unarchive `of_v0.9.8_osx_release.zip` to where you hope
-- Open `of_v0.9.8_osx_release/apps/myApps/emptyExample/emptyExample.xcodeproj`
+- Test
+  - Open `of_v0.9.8_osx_release/apps/myApps/emptyExample/emptyExample.xcodeproj`
   - Build `emptyExample` and run
 
-### node.js (optional)
-
-see `node_script/README.md`
-
-### clone this repo.
-
-clone to `/path/to/of_v0.9.8_osx_release/apps`
-
-## OSC / ZMQ format
-
-### OSC
+## OSC
 
 * port `22222`
 
-### /transaction `timestamp` `tx_index` `input_amount` `output_amount` `size`
+### /transaction
+
+* `timestamp`: long
+* `tx_index`: long
+* `input_amount`: double
+* `output_amount`: double
+* `size`: long
 
 ### /ticker `currency` `buy` `sell` `last` `15m`
 
-### ZMQ
+* `currency`: string
+* `buy`: double
+  * lowest price to buy
+* `sell`: double
+  * highest price to sell
+* `last`: double
+  * last price
+* `15m`: double
+  * price before 15m
+
+## ZMQ
 
 * port `22223`
 
@@ -75,3 +80,6 @@ clone to `/path/to/of_v0.9.8_osx_release/apps`
 }
 ```
 
+## node.js (advanced)
+
+see `node_script/README.md`
