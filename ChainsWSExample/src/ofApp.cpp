@@ -10,10 +10,10 @@ static constexpr std::size_t num_transaction = 30;
 
 struct Ticker {
     std::string key;
-    std::uint64_t buy;
-    std::uint64_t sell;
-    std::uint64_t last;
-    std::uint64_t before15m;
+    double buy;
+    double sell;
+    double last;
+    double before15m;
 };
 
 class ofApp : public ofBaseApp {
@@ -23,16 +23,16 @@ class ofApp : public ofBaseApp {
     ofxZmqSubscriber subscriber;
 public:
     void setup() {
-        ofxSubscribeOsc(osc_port, "/transaction", [=](std::uint64_t time, std::uint64_t tx_id, std::string input, std::string output, std::size_t size) {
-            std::string str = ofVAArgsToString("%8d [at %8d] %12s : %12s / %6d", tx_id, time, input.c_str(), output.c_str(), size);
+        ofxSubscribeOsc(osc_port, "/transaction", [=](std::uint64_t time, std::uint64_t tx_id, double input, double output, std::size_t size) {
+            std::string str = ofVAArgsToString("%8d [at %8d] %12.0f : %12.0f / %6d", tx_id, time, input, output, size);
             transactions.emplace_back(str);
         });
-        ofxSubscribeOsc(osc_port, "/ticker", [=](const std::string &key, const std::string &buy, const std::string &sell, const std::string &last, const std::string &before15m) {
+        ofxSubscribeOsc(osc_port, "/ticker", [=](const std::string &key, double buy, double sell, double last, double before15m) {
             tickers[key].key       = key;
-            tickers[key].buy       = std::stoull(buy);
-            tickers[key].sell      = std::stoull(sell);
-            tickers[key].last      = std::stoull(last);
-            tickers[key].before15m = std::stoull(before15m);
+            tickers[key].buy       = buy;
+            tickers[key].sell      = sell;
+            tickers[key].last      = last;
+            tickers[key].before15m = before15m;
         });
         ofSetBackgroundColor(0, 0, 0);
         ofSetColor(255, 255, 255);
@@ -68,7 +68,7 @@ public:
         i = 6;
         for(auto &&pair : tickers) {
             auto &&ticker = pair.second;
-            std::string &&str = ofVAArgsToString("%s : %8d / %8d / %8d", ticker.key.c_str(), ticker.last, ticker.buy, ticker.sell);
+            std::string &&str = ofVAArgsToString("%s : %12.2f / %12.2f / %12.2f", ticker.key.c_str(), ticker.last, ticker.buy, ticker.sell);
 //            std::stringstream ss;
 //            ss << ticker.key << " : " << ticker.last << " / " << ticker.buy << " / " << ticker.sell;
             ofDrawBitmapString(str, 640, 20 + i++ * 24);

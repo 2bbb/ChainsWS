@@ -10,13 +10,13 @@ const parseTransaction = transaction => {
         size,
         time
     } = transaction;
-    const input_amount  = inputs.reduce((sum, x) => sum + x.prev_out.value, 0) + "";
-    const output_amount = out.reduce((sum, x) => sum + x.value, 0) + "";
+    const input_amount  = inputs.reduce((sum, x) => sum + x.prev_out.value, 0);
+    const output_amount = out.reduce((sum, x) => sum + x.value, 0);
     return [
         time, // sec
         tx_index, 
-        input_amount, 
-        output_amount, 
+        {type: 'double', value: input_amount}, 
+        {type: 'dooule', value: output_amount}, 
         size 
     ];
 }

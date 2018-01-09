@@ -22,13 +22,16 @@ socket.onBlock(data => {
     zmq.block(data);
 });
 
+const double = value => ({type: 'double', value});
+
 function getTicker() {
     exchange
         .getTicker()
         .then(data => {
             for(let key in data) {
                 const tick = data[key];
-                osc.ticker(key, tick.buy + "", tick.sell + "", tick.last + "", tick['15m'] + "");
+                console.log(tick);
+                osc.ticker(key, double(tick.buy), double(tick.sell), double(tick.last), double(tick['15m']));
             }
         })
         .catch(err => {
