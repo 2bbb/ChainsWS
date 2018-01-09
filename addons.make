@@ -1,0 +1,4 @@
+ofxOsc
+local_addons/ofxJsonUtils
+local_addons/ofxPubSubOsc
+local_addons/ofxZmq
