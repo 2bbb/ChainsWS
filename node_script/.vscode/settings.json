@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/2bit/.platformio/penv/bin:/Users/2bit/.cargo/bin:/usr/local/opt/opencv@2/bin:/usr/local/opt/sqlite/bin:/Users/2bit/.pyenv/shims:/Users/2bit/.nvm/versions/node/v8.9.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:/Library/Frameworks/Mono.framework/Versions/Current/Commands"
+    }
+}
