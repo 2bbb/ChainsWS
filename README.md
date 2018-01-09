@@ -8,12 +8,16 @@
 - Download openframeworks `of_v0.9.8_osx_release.zip`
   - http://openframeworks.cc/versions/v0.9.8/of_v0.9.8_osx_release.zip
 - Unarchive `of_v0.9.8_osx_release.zip` to where you hope
-- Open `of_v0.9.8_osx_release/myApps/emptyExample/emptyExample.xcodeproj`
+- Open `of_v0.9.8_osx_release/apps/myApps/emptyExample/emptyExample.xcodeproj`
   - Build `emptyExample` and run
 
 ### node.js (optional)
 
 see `node_script/README.md`
+
+### clone this repo.
+
+clone to `/path/to/of_v0.9.8_osx_release/apps`
 
 ## OSC / ZMQ format
 
