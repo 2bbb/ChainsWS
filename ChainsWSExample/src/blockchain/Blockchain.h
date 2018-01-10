@@ -43,6 +43,39 @@ namespace Blockchain {
             ofxJsonUtils::load(json, kv(nonce));
         }
     };
+    
+    struct SimpleTransaction {
+        SimpleTransaction() {};
+        
+        SimpleTransaction(std::uint64_t time, std::uint64_t tx_id, double input, double output, std::size_t size)
+            : time(time)
+            , tx_id(tx_id)
+            , input(input)
+            , output(output)
+            , size(size)
+        {}
+        std::uint64_t time;
+        std::uint64_t tx_id;
+        double input;
+        double output;
+        std::size_t size;
+        
+        std::string print() const {
+            return ofVAArgsToString("%8d [at %8d] %12.0f : %12.0f / %6d", tx_id, time, input, output, size);
+        }
+    };
+    
+    struct Transaction {
+        
+    };
+    
+    struct Ticker {
+        std::string key;
+        double buy;
+        double sell;
+        double last;
+        double before15m;
+    };
 };
 
 #endif /* Blockchain_h */

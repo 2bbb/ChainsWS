@@ -8,24 +8,33 @@
 static constexpr std::uint16_t osc_port = 22222;
 static constexpr std::size_t num_transaction = 30;
 
-struct Ticker {
-    std::string key;
-    double buy;
-    double sell;
-    double last;
-    double before15m;
+struct Transaction : public Blockchain::SimpleTransaction {
+    Transaction(std::uint64_t time, std::uint64_t tx_id, double input, double output, std::size_t size)
+        : Blockchain::SimpleTransaction(time, tx_id, input, output, size)
+        , x(ofRandomWidth())
+        , y(ofRandomHeight())
+    {};
+    
+    void draw() const {
+        ofSetColor(255, 0, 0, 127);
+        ofDrawCircle(x, y, output * 0.0000001);
+    };
+    
+    float x;
+    float y;
 };
 
 class ofApp : public ofBaseApp {
-    std::deque<std::string> transactions;
     std::deque<Blockchain::Block> blocks;
-    std::map<std::string, Ticker> tickers;
+    std::deque<Transaction> transactions;
+    std::map<std::string, Blockchain::Ticker> tickers;
+    
     ofxZmqSubscriber subscriber;
+    
 public:
     void setup() {
         ofxSubscribeOsc(osc_port, "/transaction", [=](std::uint64_t time, std::uint64_t tx_id, double input, double output, std::size_t size) {
-            std::string str = ofVAArgsToString("%8d [at %8d] %12.0f : %12.0f / %6d", tx_id, time, input, output, size);
-            transactions.emplace_back(str);
+            transactions.emplace_back(time, tx_id, input, output, size);
         });
         ofxSubscribeOsc(osc_port, "/ticker", [=](const std::string &key, double buy, double sell, double last, double before15m) {
             tickers[key].key       = key;
@@ -37,6 +46,8 @@ public:
         ofSetBackgroundColor(0, 0, 0);
         ofSetColor(255, 255, 255);
         subscriber.connect("tcp://localhost:22223");
+        
+        ofSetCircleResolution(64);
     }
     void update() {
         if(num_transaction < transactions.size()) {
@@ -52,9 +63,14 @@ public:
         }
     }
     void draw() {
+        for(auto &&tx : transactions) {
+            tx.draw();
+        }
+        
+        ofSetColor(255, 255, 255);
         std::size_t i = 0;
         for(; i < transactions.size(); i++) {
-            ofDrawBitmapString(transactions[i], 20, 20 + i * 24);
+            ofDrawBitmapString(transactions[i].print(), 20, 20 + i * 24);
         }
         i = 0;
         if(blocks.size()) {
@@ -62,15 +78,13 @@ public:
             ofDrawBitmapString("time:         " + ofToString(block.time), 640, 20 + 24 * i++);
             ofDrawBitmapString("transactions: " + ofToString(block.txIndexes.size()), 640, 20 + 24 * i++);
             ofDrawBitmapString("hash:         " + block.hash, 640, 20 + 24 * i++);
-            ofDrawBitmapString("est BTC sent: " + ofToString(block.estimatedBTCSent), 640, 20 + 24 * i++);
-            ofDrawBitmapString("total sent:   " + ofToString(block.totalBTCSent), 640, 20 + 24 * i++);
+            ofDrawBitmapString("estimated BTC sent: " + ofToString(block.estimatedBTCSent), 640, 20 + 24 * i++);
+            ofDrawBitmapString("total BTC sent:     " + ofToString(block.totalBTCSent), 640, 20 + 24 * i++);
         }
         i = 6;
         for(auto &&pair : tickers) {
             auto &&ticker = pair.second;
             std::string &&str = ofVAArgsToString("%s : %12.2f / %12.2f / %12.2f", ticker.key.c_str(), ticker.last, ticker.buy, ticker.sell);
-//            std::stringstream ss;
-//            ss << ticker.key << " : " << ticker.last << " / " << ticker.buy << " / " << ticker.sell;
             ofDrawBitmapString(str, 640, 20 + i++ * 24);
         }
     }
