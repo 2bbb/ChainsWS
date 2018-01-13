@@ -5,7 +5,6 @@
 
 #include "Blockchain.h"
 
-static constexpr std::uint16_t osc_port = 22222;
 static constexpr std::size_t num_transaction = 30;
 
 struct Transaction : public Blockchain::SimpleTransaction {
@@ -33,6 +32,11 @@ class ofApp : public ofBaseApp {
     
 public:
     void setup() {
+        ofJson setting = ofLoadJson("setting.json");
+        
+        ofJson osc_setting = setting["osc"];
+        std::uint16_t osc_port = osc_setting["port"];
+        
         ofxSubscribeOsc(osc_port, "/transaction", [=](std::uint64_t time, std::uint64_t tx_id, double input, double output, std::size_t size) {
             transactions.emplace_back(time, tx_id, input, output, size);
         });
@@ -45,7 +49,12 @@ public:
         });
         ofSetBackgroundColor(0, 0, 0);
         ofSetColor(255, 255, 255);
-        subscriber.connect("tcp://localhost:22223");
+        
+        ofJson zmq_setting = setting["zmq"];
+        std::string zmq_host = zmq_setting["host"];
+        std::uint16_t zmq_port = zmq_setting["port"];
+        std::string zmq_destination = "tcp://" + zmq_host + ":" + ofToString(zmq_port);
+        subscriber.connect(zmq_destination);
         
         ofSetCircleResolution(64);
     }

@@ -1,0 +1,9 @@
+{
+	"osc": {
+		"port": 22222
+	},
+	"zmq": {
+		"host": "localhost",
+		"port": 22223
+	}
+}
