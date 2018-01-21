@@ -5,22 +5,30 @@
 
 #include "Blockchain.h"
 
-static constexpr std::size_t num_transaction = 30;
+static constexpr std::size_t num_transaction = 50;
 
 struct Transaction : public Blockchain::SimpleTransaction {
     Transaction(std::uint64_t time, std::uint64_t tx_id, double input, double output, std::size_t size)
         : Blockchain::SimpleTransaction(time, tx_id, input, output, size)
         , x(ofRandomWidth())
         , y(ofRandomHeight())
+        , age(255)
+        , size(log(output * 0.00001 + 2) * 10)
     {};
     
-    void draw() const {
-        ofSetColor(255, 0, 0, 127);
-        ofDrawCircle(x, y, output * 0.0000001);
+    void draw() {
+        ofSetColor(255, 0, 0, age);
+        ofDrawCircle(x, y, size);
+        ofSetColor(255, 255, 255, age);
+        ofDrawBitmapString(ofToString(tx_id), x + size, y + 0.5f * size);
+        ofDrawBitmapString(ofToString(output), x + size, y + 0.5f * size + 24);
+        age--;
     };
     
     float x;
     float y;
+    int age;
+    float size;
 };
 
 class ofApp : public ofBaseApp {
@@ -59,9 +67,14 @@ public:
         ofSetCircleResolution(64);
     }
     void update() {
-        if(num_transaction < transactions.size()) {
-            transactions.erase(transactions.begin(), transactions.begin() + transactions.size() - num_transaction);
-        }
+//        if(num_transaction < transactions.size()) {
+//            transactions.erase(transactions.begin(), transactions.begin() + transactions.size() - num_transaction);
+//        }
+        auto it = std::remove_if(transactions.begin(), transactions.end(), [](const Transaction &t) {
+            return t.age == 0;
+        });
+        transactions.erase(it, transactions.end());
+        
         while(subscriber.hasWaitingMessage()) {
             std::string data;
             subscriber.getNextMessage(data);
@@ -99,7 +112,11 @@ public:
     }
     void exit() {}
     
-    void keyPressed(int key) {}
+    void keyPressed(int key) {
+        if(key == 'F') {
+            ofToggleFullscreen();
+        }
+    }
     void keyReleased(int key) {}
     void mouseMoved(int x, int y ) {}
     void mouseDragged(int x, int y, int button) {}
