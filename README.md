@@ -2,37 +2,36 @@
 
 ## Setup environment
 
-- Install Xcode 8/9
-- Download openframeworks `of_v0.9.8_osx_release.zip`
-  - http://openframeworks.cc/versions/v0.9.8/of_v0.9.8_osx_release.zip
-- Unarchive `of_v0.9.8_osx_release.zip` to where you hope
-- Test
-  - Open `of_v0.9.8_osx_release/apps/myApps/emptyExample/emptyExample.xcodeproj`
-  - Build `emptyExample` and run
+https://docs.google.com/document/d/1rnYC541wRDR49dsRm51Aq9zqasvUR1-CNS8c4IE1Jug/edit
 
 ## OSC
 
-* port `22222`
+* port `22222` 
 
-### /transaction
+### /transaction `timestamp` `tx_index` `input_amount` `output_amount` `size`
 
 * `timestamp`: long
+  * timestamp of blockchain.info received data
 * `tx_index`: long
+  * unique index
 * `input_amount`: double
+  * sum of input value
 * `output_amount`: double
+  * sum of output value
 * `size`: long
+  * transaction size
 
-### /ticker `currency` `buy` `sell` `last` `15m`
+### /ticker `currency_name` `buy` `sell` `last` `last_15m`
 
-* `currency`: string
+* `currency_name`: string
 * `buy`: double
   * lowest price to buy
 * `sell`: double
   * highest price to sell
 * `last`: double
-  * last price
-* `15m`: double
-  * price before 15m
+  * last trade price
+* `last_15m`: double
+  * latest trade price  on 15m ago
 
 ## ZMQ
 
@@ -80,6 +79,6 @@
 }
 ```
 
-## node.js (advanced)
+## node.js script (advanced)
 
 see `node_script/README.md`
