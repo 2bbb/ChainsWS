@@ -8,6 +8,7 @@
 #include "ArcMotionManager.h"
 #include "TriParticleManager.h"
 #include "SphereParticleManager.h"
+
 using namespace ofxChoreograph;
 
 class ofApp : public ofBaseApp{
@@ -35,5 +36,5 @@ class ofApp : public ofBaseApp{
     ArcMotionManager arc_m;
     TriParticleManager triangle_m;
     SphereParticleManager sphere_m;
-
+    
 };

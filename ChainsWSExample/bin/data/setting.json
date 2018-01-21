@@ -3,7 +3,7 @@
 		"port": 22222
 	},
 	"zmq": {
-		"host": "localhost",
+		"host": "10.10.10.222",
 		"port": 22223
 	}
 }

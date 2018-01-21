@@ -3,7 +3,6 @@
 static ofColor randomColor(){
     return ofColor::fromHsb(ofRandom(255), 255, 255);
 }
-ofEasyCam cam;
 //--------------------------------------------------------------
 void ofApp::setup(){
     ofSetCircleResolution(90);
@@ -40,22 +39,30 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     // circle
     // x, y, z, radius, color
+    ofVec3f begin_pos(ofGetWidth()/2.0, ofGetHeight()/2.0, 0);
+    ofVec3f end_pos(ofRandomWidth(), ofRandomHeight(), 0);
+    ofColor begin_color = randomColor();
+    ofColor end_color = randomColor();
+    ofVec3f begin_size(100,100,100);
+    ofVec3f end_size(10,10,10);
+    float begin_radius = 100;
+    float end_radius = 10;
     if(key == '1'){
-        circle_m.emit({ofRandomWidth(), ofRandomHeight(), 0, 100, randomColor()},
-                      {ofRandomWidth(), ofRandomHeight(), 0, 170, randomColor()},
+        circle_m.emit({begin_pos, begin_radius, begin_color},
+                      {end_pos, end_radius, end_color},
                       1);
     }
     //rect
-    // x, y, z, w, h, radius, color
+    // pos, w, h, radius, color
     else if(key == '2'){
-        rect_m.emit({ofRandomWidth(), ofRandomHeight(), 0, 100, 100, randomColor()},
-                      {ofRandomWidth(), ofRandomHeight(), 0, 10, 10, randomColor()}, 1);
+        rect_m.emit({begin_pos, begin_radius, begin_radius, begin_color},
+                      {end_pos, end_radius, end_radius, end_color}, 1);
     }
     // arc
-    // x, y, z, radius, width, angle begin, angle end , color
+    // pos, radius, width, angle begin, angle end , color
     else if(key == '3'){
-        arc_m.emit({ofRandomWidth(), ofRandomHeight(), 0, 100, 100, 0, ofRandom(360), randomColor()},
-                      {ofRandomWidth(), ofRandomHeight(), 0, 10, 10, 0, ofRandom(360), randomColor()},
+        arc_m.emit({begin_pos, begin_radius, 10, 0, ofRandom(360), begin_color},
+                      {end_pos, end_radius, 10, 0, ofRandom(360), end_color},
                       1);
     }
     // triangle
@@ -83,22 +90,23 @@ void ofApp::keyPressed(int key){
                       );
     }
     // cube
-    // x, y, z, w, h, d, color
+    // pos, size, color
     else if(key == '5'){
-        cube_m.emit({ofRandomWidth(), ofRandomHeight(), 0, 100, 100, 100, randomColor()},
-                      {ofRandomWidth(), ofRandomHeight(), 0, 0, 0, 0, randomColor()},
+        cube_m.emit({begin_pos, begin_size, randomColor()},
+                      {end_pos, end_size, randomColor()},
                       1);
     }
     // shpere
-    // x, y, z, radius, color
+    // pos, radius, color
     else if(key == '6'){
-        sphere_m.emit({ofRandomWidth(), ofRandomHeight(), 110 , 100, randomColor()},
-                    {ofRandomWidth(), ofRandomHeight(), 0, 0, randomColor()},
+        sphere_m.emit({begin_pos, begin_radius, randomColor()},
+                    {end_pos, end_radius, randomColor()},
                     1);
     }
+    // pos, radius, color
     else if(key == '7'){
-        sphere_m.emit({static_cast<float>(ofGetWidth()/2.0), static_cast<float>(ofGetHeight()/2.0), 0 , 5, randomColor()},
-                      {ofRandomWidth(), ofRandomHeight(), 1, 0, randomColor()},
+        sphere_m.emit({begin_pos, 5,randomColor()},
+                      {end_pos, 0, randomColor()},
                       10);
     }
 
