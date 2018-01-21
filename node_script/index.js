@@ -35,7 +35,7 @@ function getTicker() {
         .then(data => {
             for(let key in data) {
                 const tick = data[key];
-                console.log(tick);
+                // console.log(tick);
                 osc.ticker(key, double(tick.buy), double(tick.sell), double(tick.last), double(tick['15m']));
             }
         })
