@@ -17,12 +17,12 @@ function startSocket() {
     });
 
     socket.onTransaction(data => {
-        // console.log('tx:', JSON.stringify(data, null, "  "));
+        console.log('tx', new Date());
         osc.transaction(data);
     });
 
     socket.onBlock(data => {
-// console.log("block:", data);
+        console.log('========================= block', new Date(), '=========================');
         zmq.block(data);
     });
 }
@@ -33,9 +33,9 @@ function getTicker() {
     exchange
         .getTicker()
         .then(data => {
+            console.log('tick', new Date());
             for(let key in data) {
                 const tick = data[key];
-                // console.log(tick);
                 osc.ticker(key, double(tick.buy), double(tick.sell), double(tick.last), double(tick['15m']));
             }
         })
