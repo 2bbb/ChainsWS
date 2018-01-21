@@ -431,7 +431,6 @@
 		ED466BBD70EA79878B666EF2 /* mtrie.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = mtrie.hpp; path = local_addons/ofxZmq/libs/zmq/src/mtrie.hpp; sourceTree = SOURCE_ROOT; };
 		EE94AAAE02A227813302FEDF /* stream.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = stream.hpp; path = local_addons/ofxZmq/libs/zmq/src/stream.hpp; sourceTree = SOURCE_ROOT; };
 		EED227023478F99F433CA0AE /* gssapi_mechanism_base.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = gssapi_mechanism_base.cpp; path = local_addons/ofxZmq/libs/zmq/src/gssapi_mechanism_base.cpp; sourceTree = SOURCE_ROOT; };
-		EFCA7B0920144D4E007790D4 /* Blockchain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Blockchain.h; sourceTree = "<group>"; };
 		EFCA7B0B20144D94007790D4 /* ArcMotionManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ArcMotionManager.cpp; sourceTree = "<group>"; };
 		EFCA7B0C20144D94007790D4 /* ArcMotionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArcMotionManager.h; sourceTree = "<group>"; };
 		EFCA7B0D20144D94007790D4 /* BaseMotion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseMotion.h; sourceTree = "<group>"; };
@@ -865,7 +864,6 @@
 			isa = PBXGroup;
 			children = (
 				EFCA7B0A20144D94007790D4 /* Motion */,
-				EFCA7B0820144D4E007790D4 /* blockchain */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
@@ -906,14 +904,6 @@
 				60DE2A343EDBDBAF38786EF1 /* choreograph */,
 			);
 			name = src;
-			sourceTree = "<group>";
-		};
-		EFCA7B0820144D4E007790D4 /* blockchain */ = {
-			isa = PBXGroup;
-			children = (
-				EFCA7B0920144D4E007790D4 /* Blockchain.h */,
-			);
-			path = blockchain;
 			sourceTree = "<group>";
 		};
 		EFCA7B0A20144D94007790D4 /* Motion */ = {
